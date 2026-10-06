@@ -28,6 +28,16 @@ export function Header({ lang, pageId }: { lang: Lang; pageId?: string }) {
   const t = getDict(lang);
   const groups = navGroups(lang);
   const appointmentHref = pathOf("appointment", lang);
+  // Mobile architecture: Home, doctor, topic clusters, info hub, practice, FAQ, contact.
+  const byHref = new Map(groups.map((g) => [g.href, g]));
+  const plain = (id: string): MenuGroup => ({ href: pathOf(id, lang), label: getContent(lang, id).label });
+  const pick = (id: string): MenuGroup => byHref.get(pathOf(id, lang)) ?? plain(id);
+  const mobileGroups: MenuGroup[] = [
+    { href: pathOf("home", lang), label: t.home },
+    pick("doctor"),
+    pick("hub-gyneco"), pick("hub-pregnancy"), pick("hub-echo"), pick("hub-conditions"), pick("hub-fertility"),
+    plain("info-hub"), plain("cabinet"), plain("faq"), pick("contact"),
+  ];
 
   return (
     <header className="no-print sticky top-0 z-50 border-b border-ink/[0.06] bg-sand-50/90 backdrop-blur-md">
@@ -58,11 +68,11 @@ export function Header({ lang, pageId }: { lang: Lang; pageId?: string }) {
           </ul>
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex shrink-0 items-center gap-1.5 min-[360px]:gap-2">
           <div className="hidden sm:block"><LanguageSwitcher lang={lang} pageId={pageId} label={t.switchTo} /></div>
           <Link href={appointmentHref} data-track="appointment_click" data-track-location="header" className="btn btn-primary hidden !min-h-[44px] whitespace-nowrap !py-2 text-sm xl:inline-flex">{t.cta.appointmentShort}</Link>
           <div className="sm:hidden"><LanguageSwitcher lang={lang} pageId={pageId} label={t.switchTo} /></div>
-          <MobileMenu groups={groups} labels={{ menu: t.menu, close: t.closeMenu }} cta={{ href: appointmentHref, label: t.cta.appointment }} />
+          <MobileMenu groups={mobileGroups} labels={{ menu: t.menu, close: t.closeMenu }} cta={{ href: appointmentHref, label: t.cta.appointment }} />
         </div>
       </div>
     </header>
