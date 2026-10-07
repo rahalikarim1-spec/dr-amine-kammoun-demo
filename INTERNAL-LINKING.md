@@ -12,6 +12,12 @@ Linking follows **topic relationships**, not keyword anchors. Anchors are the na
 | Pathologies `/fr/pathologies-gynecologiques/` | Endométriose · SOPK · Kyste ovarien · Fibrome (+ cross-listed: douleurs pelviennes, troubles du cycle, ménopause) |
 | Local | Gynécologue Ain Zaghouan Nord → Zones desservies |
 
+## Navigation model (simple front end, deep architecture)
+Header and mobile drawer expose **5 entries only** (curated in `src/config/navigation.ts`, ≤6 children each): *Le docteur* (profile, publications, cabinet) · *Gynécologie* · *Grossesse* · *Informations* (échographie, fertilité, pathologies, FAQ) · *Contact* (rendez-vous, Ain Zaghouan Nord, L'Aouina, zones). Everything else is reached via hubs, breadcrumbs, contextual links, "À lire aussi" blocks and the full footer (all 5 hubs, doctor, publications, both local pages, areas, legal). No page was removed or de-linked.
+
+## Entity chain (doctor → specialty → topics → geography → contact)
+Doctor ⇄ Publications · Doctor → Gynécologie / Grossesse hubs → child articles → Local pages (Ain Zaghouan Nord, L'Aouina) → Contact / Rendez-vous. The Aouina page links to: primary local page, doctor, gynécologie, grossesse, échographie, fertilité, pathologies, areas, appointment, contact. Back-links to it: home (chips + doctor card), header/footer, primary local page, areas hub, cabinet, doctor, contact, and the gynécologie / grossesse / échographie / fertilité hubs (`related`). Anchors are varied and natural ("l'Aouina", "depuis l'Aouina", page label in cards).
+
 ## Link types (all implemented)
 1. **Hierarchy** — breadcrumbs on every page (child → parent chain), hub → child cards, cross-listed cards in the conditions hub.
 2. **Contextual** — inline links in the copy using `[[page-id|anchor]]` (3–7 distinct targets per article, enforced by `npm run validate`).

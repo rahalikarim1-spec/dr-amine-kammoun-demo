@@ -142,8 +142,8 @@ export const hubs: Record<string, PageContent> = {
 
   areas: {
     label: "Zones desservies",
-    metaTitle: "Zones desservies : Ain Zaghouan, Aouina, Soukra, Lac 2",
-    metaDescription: "Accès au cabinet depuis Ain Zaghouan, l'Aouina, La Soukra, Cité El Wahat, Lac 2, les Berges du Lac et le Grand Tunis : itinéraires et informations pratiques.",
+    metaTitle: "Zones desservies : Soukra, Lac 2, Cité El Wahat, Grand Tunis",
+    metaDescription: "Itinéraires vers le cabinet d'Ain Zaghouan Nord depuis La Soukra, la Cité El Wahat, Lac 2, les Berges du Lac, l'Aouina et le Grand Tunis.",
     h1: "Zones desservies : venir au cabinet depuis les quartiers voisins",
     summary: "Itinéraires vers le cabinet depuis Ain Zaghouan, l'Aouina, La Soukra, Lac 2 et le Grand Tunis.",
     intro: "Le cabinet du Dr Amine Kammoun est situé à Ain Zaghouan Nord, à Tunis. Les patientes viennent de plusieurs secteurs du nord de l'agglomération. Pour chaque zone, vous trouvez ci-dessous un rappel pratique et un lien d'itinéraire Google Maps calculé depuis votre secteur.",
@@ -152,7 +152,7 @@ export const hubs: Record<string, PageContent> = {
         p("Le cabinet est implanté à Ain Zaghouan Nord. Les informations générales sur le cabinet figurent sur la page [[local-ain-zaghouan|gynécologue à Ain Zaghouan Nord]] et sur la page [[cabinet|le cabinet]]."),
       ]),
       s("aouina", "L'Aouina", [
-        p("L'Aouina est un secteur voisin du nord de Tunis, proche de l'aéroport Tunis-Carthage. Si vous cherchez un cabinet de gynécologie proche de l'Aouina, utilisez l'itinéraire ci-dessous pour estimer le trajet selon l'heure de la journée."),
+        p("L'Aouina est un secteur voisin d'Ain Zaghouan Nord, au nord de Tunis. Une page dédiée détaille l'accès et les informations pour les patientes de ce secteur : [[local-aouina|gynécologue près de l'Aouina]]. L'itinéraire ci-dessous est calculé depuis l'Aouina."),
       ]),
       s("cite-wahat", "Cité El Wahat", [
         p("Pour les habitantes de la Cité El Wahat, l'itinéraire se calcule directement depuis votre adresse avec le lien ci-dessous."),
@@ -164,7 +164,7 @@ export const hubs: Record<string, PageContent> = {
         p("Lac 2 et les Berges du Lac forment un secteur résidentiel et d'affaires de Tunis. Pour un cabinet gynécologique accessible depuis le Lac 2, calculez votre trajet avec le lien ci-dessous, en tenant compte de l'heure de votre rendez-vous."),
       ]),
       s("grand-tunis", "Grand Tunis", [
-        p("Les patientes viennent aussi d'autres quartiers de Tunis et du Grand Tunis. Les temps de trajet varient fortement selon la circulation ; prévoyez une marge pour arriver sereinement à votre rendez-vous."),
+        p("Les patientes viennent aussi d'autres quartiers de Tunis et du Grand Tunis. Pour d'autres secteurs (Jardins de Carthage, La Marsa, Le Kram), les liens ci-dessous calculent l'itinéraire vers le cabinet ; les temps de trajet varient fortement selon la circulation, prévoyez une marge pour arriver sereinement."),
       ]),
     ],
     faq: [

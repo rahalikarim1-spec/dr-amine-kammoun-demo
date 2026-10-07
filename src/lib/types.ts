@@ -25,6 +25,7 @@ export type Template =
   | "appointment"
   | "faq"
   | "infohub"
+  | "publications"
   | "legal";
 
 export type PageType = "home" | "core" | "hub" | "child" | "local" | "legal";

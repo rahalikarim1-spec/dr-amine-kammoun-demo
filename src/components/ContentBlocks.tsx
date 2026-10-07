@@ -130,6 +130,7 @@ export function ReviewMeta({ content, lang, medical = true }: { content: PageCon
   return (
     <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-1 text-sm text-ink-mute">
       <p>{t.lastUpdated} : <time dateTime={content.lastUpdated}>{fmt(lang, content.lastUpdated)}</time></p>
+      {medical && <p>{t.author} <Link href={pathOf("doctor", lang)} className="link-inline">{siteConfig.nameLocalized[lang]}</Link></p>}
       {!medical ? null : reviewer && reviewed ? (
         <p>{t.reviewedBy} : {reviewer}, <time dateTime={reviewed}>{fmt(lang, reviewed)}</time></p>
       ) : (

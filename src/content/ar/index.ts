@@ -7,5 +7,6 @@ import { ultrasound } from "./ultrasound";
 import { fertility } from "./fertility";
 import { conditions } from "./conditions";
 import { legal } from "./legal";
+import { localExtra } from "./local";
 
-export const ar: Record<string, PageContent> = { ...core, ...hubs, ...gynecology, ...pregnancy, ...ultrasound, ...fertility, ...conditions, ...legal };
+export const ar: Record<string, PageContent> = { ...core, ...hubs, ...gynecology, ...pregnancy, ...ultrasound, ...fertility, ...conditions, ...legal, ...localExtra };

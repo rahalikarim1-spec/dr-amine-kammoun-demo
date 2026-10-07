@@ -45,8 +45,11 @@ export const core: Record<string, PageContent> = {
           "pour les questions autour de la [[gyn-menopause|ménopause]].",
         ]),
       ]),
+      s("academique", "Parcours académique et publications", [
+        p("Une page est dédiée au [[doctor-publications|parcours académique et aux publications scientifiques]] du Dr Kammoun. Elle est complétée au fur et à mesure de la vérification des informations."),
+      ]),
       s("exercice", "Exercice et contact", [
-        p("Le cabinet est situé à Ain Zaghouan Nord, Tunis. Pour des informations pratiques, voir [[cabinet|le cabinet]] et [[local-ain-zaghouan|gynécologue à Ain Zaghouan Nord]]. Pour toute question ou rendez-vous : [[contact|contact]]."),
+        p("Le cabinet est situé à Ain Zaghouan Nord, Tunis. Pour des informations pratiques, voir [[cabinet|le cabinet]] et [[local-ain-zaghouan|gynécologue à Ain Zaghouan Nord]]. Les patientes de [[local-aouina|l'Aouina]] et des quartiers voisins y trouvent aussi les informations d'accès. Pour toute question ou rendez-vous : [[contact|contact]]."),
       ]),
       s("deontologie", "Information médicale et déontologie", [
         p("Les contenus de ce site respectent les principes de l'information médicale : pas de promesse de résultat, pas de comparaison, pas de publicité. Voir notre [[editorial-policy|politique éditoriale]]."),
@@ -68,7 +71,7 @@ export const core: Record<string, PageContent> = {
     intro: "Le cabinet du Dr Amine Kammoun est situé à Ain Zaghouan Nord, à Tunis. Vous trouverez ici les informations pratiques pour vous y rendre et préparer votre venue.",
     sections: [
       s("situation", "Situation", [
-        p("Le cabinet se trouve à Ain Zaghouan Nord, dans le nord de l'agglomération tunisienne. Selon votre point de départ ([[areas|Aouina, La Soukra, Lac 2, Cité El Wahat…]]), l'itinéraire se calcule facilement avec Google Maps depuis la page [[contact|contact]]."),
+        p("Le cabinet se trouve à Ain Zaghouan Nord, dans le nord de l'agglomération tunisienne. Selon votre point de départ ([[local-aouina|L'Aouina]], [[areas|La Soukra, Lac 2, Cité El Wahat…]]), l'itinéraire se calcule facilement avec Google Maps depuis la page [[contact|contact]]."),
       ]),
       s("preparer", "Préparer votre venue", [
         ul([
@@ -165,6 +168,7 @@ export const core: Record<string, PageContent> = {
 
   "info-hub": {
     label: "Informations médicales",
+    navLabel: "Informations",
     metaTitle: "Informations médicales : gynécologie, grossesse, fertilité",
     metaDescription: "Centre d'information médicale : gynécologie, grossesse, échographie, fertilité et pathologies gynécologiques. Contenus éducatifs et structurés.",
     h1: "Informations médicales en gynécologie-obstétrique",
@@ -208,7 +212,7 @@ export const core: Record<string, PageContent> = {
         ]),
       ]),
       s("quartiers", "Les quartiers et zones voisins", [
-        p("Les patientes viennent d'Ain Zaghouan, de l'Aouina, de la Cité El Wahat, de La Soukra, du Lac 2, des Berges du Lac et plus largement du Grand Tunis. Chaque secteur dispose d'un lien d'itinéraire Google Maps sur la page [[areas|zones desservies]]."),
+        p("Les patientes viennent d'Ain Zaghouan, de [[local-aouina|l'Aouina]], de la Cité El Wahat, de La Soukra, du Lac 2, des Berges du Lac et plus largement du Grand Tunis. Chaque secteur dispose d'un lien d'itinéraire Google Maps sur la page [[areas|zones desservies]]."),
       ]),
       s("acces", "Venir au cabinet", [
         p("Les temps de trajet varient selon l'heure et la circulation : prévoyez une marge. Ouvrez l'itinéraire dans Google Maps depuis votre position grâce au bouton « Itinéraire » ci-dessous ou depuis la page [[contact|contact]]."),
@@ -219,7 +223,7 @@ export const core: Record<string, PageContent> = {
     ],
     faq: [
       faq("Où se situe le cabinet du Dr Amine Kammoun ?", "À Ain Zaghouan Nord, Tunis. Un lien d'itinéraire Google Maps est disponible sur cette page et sur la page [[contact|contact]]."),
-      faq("Consulte-t-on au cabinet depuis l'Aouina, La Soukra ou le Lac 2 ?", "Les patientes de ces quartiers peuvent consulter au cabinet d'Ain Zaghouan Nord. Calculez votre trajet avec Google Maps depuis la page [[areas|zones desservies]]."),
+      faq("Consulte-t-on au cabinet depuis l'Aouina, La Soukra ou le Lac 2 ?", "Les patientes de ces quartiers peuvent consulter au cabinet d'Ain Zaghouan Nord. Pour l'Aouina, voir la page [[local-aouina|gynécologue près de l'Aouina]] ; pour les autres quartiers, calculez votre trajet depuis la page [[areas|zones desservies]]."),
       faq("Comment prendre rendez-vous ?", "Par téléphone au {phone}. Voir [[appointment|prendre rendez-vous]]."),
       faq("Les informations médicales du site sont-elles personnalisées ?", "Non, elles sont générales. Voir [[info-hub|informations médicales]]."),
     ],

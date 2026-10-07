@@ -17,16 +17,16 @@ export const seoConfig = {
    */
   enableFaqSchema: false,
   /** Areas named in structured data (`areaServed`) and on the local page. */
-  areaServed: [
-    { fr: "Ain Zaghouan Nord", ar: "عين زغوان الشمالية" },
+  areaServed: [  // `page` = dedicated landing page when one exists (used for links on the home page)
+    { fr: "Ain Zaghouan Nord", ar: "عين زغوان الشمالية", page: "local-ain-zaghouan" },
     { fr: "Ain Zaghouan", ar: "عين زغوان" },
-    { fr: "L'Aouina", ar: "العوينة" },
+    { fr: "L'Aouina", ar: "العوينة", page: "local-aouina" },
     { fr: "Cité El Wahat", ar: "حي الواحات" },
     { fr: "La Soukra", ar: "سكرة" },
     { fr: "Lac 2", ar: "البحيرة 2" },
     { fr: "Les Berges du Lac", ar: "ضفاف البحيرة" },
     { fr: "Grand Tunis", ar: "تونس الكبرى" },
-  ] as Localized[],
+  ] as (Localized & { page?: string })[],
 };
 
 export function pageTitle(lang: Lang, metaTitle: string, withSuffix = true): string {
@@ -37,11 +37,12 @@ export function pageTitle(lang: Lang, metaTitle: string, withSuffix = true): str
 }
 
 /** Origin used for the per-area "directions from…" links on the service-areas page (section id → place). */
-export const AREA_ORIGINS: Record<string, string> = {
-  "ain-zaghouan": "Ain Zaghouan, Tunis",
-  aouina: "L'Aouina, Tunis",
-  "cite-wahat": "Cité El Wahat, Tunis",
-  soukra: "La Soukra, Tunis",
-  lac: "Lac 2, Les Berges du Lac, Tunis",
-  "grand-tunis": "Tunis",
+export const AREA_ORIGINS: Record<string, string[]> = {
+  "ain-zaghouan": ["Ain Zaghouan, Tunis"],
+  aouina: ["L'Aouina, Tunis"],
+  "cite-wahat": ["Cité El Wahat, Tunis"],
+  soukra: ["La Soukra, Tunis"],
+  lac: ["Lac 2, Les Berges du Lac, Tunis"],
+  // Neutral origins only: no claim of proximity is made for these areas.
+  "grand-tunis": ["Jardins de Carthage, Tunis", "La Marsa, Tunis", "Le Kram, Tunis"],
 };

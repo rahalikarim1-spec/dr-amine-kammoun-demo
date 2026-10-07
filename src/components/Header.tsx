@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Lang } from "@/lib/types";
-import { PAGES, childrenOf } from "@/lib/registry";
+import { NAV } from "@/config/navigation";
 import { pathOf } from "@/lib/links";
 import { getContent } from "@/lib/content";
 import { getDict } from "@/dictionaries";
@@ -10,34 +10,23 @@ import { MobileMenu, type MenuGroup } from "./MobileMenu";
 import { ChevronIcon } from "./Icons";
 
 export function navGroups(lang: Lang): (MenuGroup & { nav: string })[] {
-  const hubs = PAGES.filter((p) => p.template === "hub" && p.inNav);
-  const singles = PAGES.filter((p) => p.template !== "hub" && p.inNav);
-  const toGroup = (id: string, withChildren: boolean) => {
+  return NAV.map(({ id, children }) => {
     const c = getContent(lang, id);
     return {
       href: pathOf(id, lang),
       label: c.label,
       nav: c.navLabel ?? c.label,
-      children: withChildren ? childrenOf(id).map((ch) => ({ href: pathOf(ch, lang), label: getContent(lang, ch.id).label })) : undefined,
+      children: children.map((ch) => ({ href: pathOf(ch, lang), label: getContent(lang, ch).label })),
     };
-  };
-  return [...hubs.map((h) => toGroup(h.id, true)), ...singles.map((s) => toGroup(s.id, false))];
+  });
 }
 
 export function Header({ lang, pageId }: { lang: Lang; pageId?: string }) {
   const t = getDict(lang);
   const groups = navGroups(lang);
   const appointmentHref = pathOf("appointment", lang);
-  // Mobile architecture: Home, doctor, topic clusters, info hub, practice, FAQ, contact.
-  const byHref = new Map(groups.map((g) => [g.href, g]));
-  const plain = (id: string): MenuGroup => ({ href: pathOf(id, lang), label: getContent(lang, id).label });
-  const pick = (id: string): MenuGroup => byHref.get(pathOf(id, lang)) ?? plain(id);
-  const mobileGroups: MenuGroup[] = [
-    { href: pathOf("home", lang), label: t.home },
-    pick("doctor"),
-    pick("hub-gyneco"), pick("hub-pregnancy"), pick("hub-echo"), pick("hub-conditions"), pick("hub-fertility"),
-    plain("info-hub"), plain("cabinet"), plain("faq"), pick("contact"),
-  ];
+  // Mobile: same curated structure as desktop, plus Home. (Drawer implementation: MobileMenu.tsx)
+  const mobileGroups: MenuGroup[] = [{ href: pathOf("home", lang), label: t.home }, ...groups];
 
   return (
     <header className="no-print sticky top-0 z-50 border-b border-ink/[0.06] bg-sand-50/90 backdrop-blur-md">

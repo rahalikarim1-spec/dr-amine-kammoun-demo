@@ -15,6 +15,7 @@ import { DirectionsFrom, LocalMap, NapCard } from "./ContactBlocks";
 import { ContactForm } from "./ContactForm";
 import { HomeView } from "./HomeView";
 import { ArcMotif, CalendarIcon, PhoneIcon } from "./Icons";
+import { Publications } from "./Publications";
 
 /** Generic content layout: hero, body with sticky aside, related pages, CTA, disclaimer. */
 function ContentLayout({ page, lang, children, extras, before, after, hideToc = false }: {
@@ -148,7 +149,7 @@ export function PageView({ page, lang }: { page: PageDef; lang: Lang }) {
         <>
           {jsonLd}
           <ContentLayout page={page} lang={lang} before={<HubExtras page={page} lang={lang} />}
-            extras={page.id === "areas" ? Object.fromEntries(Object.entries(AREA_ORIGINS).map(([k, v]) => [k, <DirectionsFrom key={k} lang={lang} origin={v} />])) : undefined}
+            extras={page.id === "areas" ? Object.fromEntries(Object.entries(AREA_ORIGINS).map(([k, v]) => [k, <div key={k} className="flex flex-wrap gap-x-3">{v.map((o) => <DirectionsFrom key={o} lang={lang} origin={o} />)}</div>])) : undefined}
             after={page.id === "areas" ? <div className="mt-10 not-prose"><LocalMap lang={lang} /></div> : undefined} />
         </>
       );
@@ -158,9 +159,17 @@ export function PageView({ page, lang }: { page: PageDef; lang: Lang }) {
         <>
           {jsonLd}
           <ContentLayout page={page} lang={lang}
-            extras={{ acces: <div className="not-prose my-6 grid gap-5 md:grid-cols-2"><NapCard lang={lang} /><LocalMap lang={lang} /></div> }} />
+            extras={{ acces: (
+              <>
+                {page.id === "local-aouina" && <div className="not-prose"><DirectionsFrom lang={lang} origin={AREA_ORIGINS.aouina[0]} /></div>}
+                <div className="not-prose my-6 grid gap-5"><NapCard lang={lang} /><LocalMap lang={lang} /></div>
+              </>
+            ) }} />
         </>
       );
+
+    case "publications":
+      return <>{jsonLd}<ContentLayout page={page} lang={lang} hideToc before={<Publications lang={lang} />} /></>;
 
     case "infohub":
       return <>{jsonLd}<ContentLayout page={page} lang={lang} hideToc after={<div className="mt-12 not-prose"><InfoHubExtras lang={lang} /></div>} /></>;
@@ -194,7 +203,7 @@ export function PageView({ page, lang }: { page: PageDef; lang: Lang }) {
         <>
           {jsonLd}
           <ContentLayout page={page} lang={lang} hideToc
-            extras={{ situation: <div className="not-prose my-6 grid gap-5 md:grid-cols-2"><NapCard lang={lang} /><LocalMap lang={lang} /></div> }} />
+            extras={{ situation: <div className="not-prose my-6 grid gap-5"><NapCard lang={lang} /><LocalMap lang={lang} /></div> }} />
         </>
       );
 
@@ -224,6 +233,17 @@ export function PageView({ page, lang }: { page: PageDef; lang: Lang }) {
             }
             after={
               <>
+                <section aria-labelledby="proinfo-h" className="not-prose mt-12">
+                  <h2 id="proinfo-h" className="mb-4">{t.doctorInfo.title}</h2>
+                  <dl className="card divide-y divide-ink/[0.07] text-[0.97rem]">
+                    <div className="flex flex-col gap-1 p-4 sm:flex-row sm:gap-6"><dt className="w-48 shrink-0 font-semibold">{t.doctorInfo.specialty}</dt><dd className="text-ink-soft">{siteConfig.jobTitle[lang]}</dd></div>
+                    <div className="flex flex-col gap-1 p-4 sm:flex-row sm:gap-6"><dt className="w-48 shrink-0 font-semibold">{t.doctorInfo.location}</dt><dd className="text-ink-soft">{siteConfig.location.area[lang]}, {siteConfig.location.city[lang]}</dd></div>
+                    <div className="flex flex-col gap-1 p-4 sm:flex-row sm:gap-6"><dt className="w-48 shrink-0 font-semibold">{t.doctorInfo.phone}</dt><dd><a href={siteConfig.phone.href} dir="ltr" className="link-inline" data-track="phone_click" data-track-location="doctor-info">{siteConfig.phone.display}</a></dd></div>
+                    {!siteConfig.professional.qualifications && (
+                      <div className="p-4 text-ink-mute">{t.doctorInfo.pending} <Link href={pathOf("doctor-publications", lang)} className="link-inline">{t.doctorInfo.publicationsLink}</Link></div>
+                    )}
+                  </dl>
+                </section>
                 {siteConfig.professional.bio && <section><h2>{lang === "fr" ? "Parcours" : "نبذة"}</h2><p>{siteConfig.professional.bio[lang]}</p></section>}
                 {siteConfig.professional.qualifications && (
                   <section><h2>{lang === "fr" ? "Formation et diplômes" : "التكوين والشهادات"}</h2><ul>{siteConfig.professional.qualifications[lang].map((q) => <li key={q}>{q}</li>)}</ul></section>

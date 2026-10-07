@@ -13,6 +13,7 @@ import { ancestorsOf } from "./registry";
 import { getContent } from "./content";
 import { urlOf } from "./links";
 import { plain } from "./inline";
+import { PUBLICATIONS, academicProfile } from "@/config/publications";
 
 const origin = siteConfig.siteUrl;
 export const IDS = {
@@ -58,6 +59,30 @@ function geo() {
     : {};
 }
 
+/** Person/Physician academic metadata — emitted ONLY from verified data in config/publications.ts. */
+function scholarlyFields() {
+  const out: Record<string, unknown> = {};
+  if (academicProfile.positions.length)
+    out.affiliation = academicProfile.positions.map((p) => ({ "@type": "Organization", name: p.institution }));
+  const creds = academicProfile.credentials.filter((c) => c.institution);
+  if (creds.length) out.alumniOf = creds.map((c) => ({ "@type": "EducationalOrganization", name: c.institution }));
+  return out;
+}
+
+/** One ScholarlyArticle node per REAL publication (none while the list is empty). */
+export function publicationNodes(lang: Lang) {
+  return PUBLICATIONS.map((p) => ({
+    "@type": "ScholarlyArticle",
+    name: p.title,
+    author: p.authors.map((a) => ({ "@type": "Person", name: a })),
+    datePublished: String(p.year),
+    isPartOf: { "@type": "Periodical", name: p.venue },
+    ...(p.abstract?.[lang] ? { abstract: p.abstract[lang] } : {}),
+    ...(p.doi ? { sameAs: `https://doi.org/${p.doi}`, identifier: p.doi } : p.url ? { url: p.url } : {}),
+    creator: { "@id": IDS.physician },
+  }));
+}
+
 export function physicianNode(lang: Lang) {
   return {
     "@type": "Physician",
@@ -80,6 +105,7 @@ export function physicianNode(lang: Lang) {
     ...geo(),
     ...openingHours(),
     ...(sameAs().length ? { sameAs: sameAs() } : {}),
+    ...scholarlyFields(),
     ...(siteConfig.professional.doctorPhoto ? { image: `${origin}${siteConfig.professional.doctorPhoto}` } : {}),
   };
 }
@@ -150,7 +176,7 @@ export function webPageNode(page: PageDef, lang: Lang, content: PageContent) {
     breadcrumb: { "@id": `${url}#breadcrumb` },
     ...(page.condition ? { about: { "@type": "MedicalCondition", name: page.condition } } : {}),
     ...(medical ? reviewFields(content) : {}),
-    ...(page.id === "local-ain-zaghouan" ? { about: { "@id": IDS.clinic } } : {}),
+    ...(page.template === "local" ? { about: { "@id": IDS.clinic } } : {}),
   };
 }
 
@@ -170,9 +196,11 @@ export function faqNode(content: PageContent) {
 const ENTITY_PAGES: Record<string, ("physician" | "clinic")[]> = {
   home: ["physician", "clinic"],
   doctor: ["physician"],
+  "doctor-publications": ["physician"],
   cabinet: ["clinic", "physician"],
   contact: ["clinic", "physician"],
   "local-ain-zaghouan": ["clinic", "physician"],
+  "local-aouina": ["clinic", "physician"],
 };
 
 export function buildGraph(page: PageDef, lang: Lang, content: PageContent) {
@@ -185,6 +213,7 @@ export function buildGraph(page: PageDef, lang: Lang, content: PageContent) {
   graph.push(webPageNode(page, lang, content));
   if (page.id !== "home") graph.push({ ...breadcrumbNode(page, lang), "@id": `${url}#breadcrumb` });
   else graph.push({ "@type": "BreadcrumbList", "@id": `${url}#breadcrumb`, itemListElement: [{ "@type": "ListItem", position: 1, name: content.label, item: url }] });
+  if (page.id === "doctor-publications") graph.push(...publicationNodes(lang));
   const faq = faqNode(content);
   if (faq) graph.push(faq);
   return { "@context": "https://schema.org", "@graph": JSON.parse(JSON.stringify(graph)) };

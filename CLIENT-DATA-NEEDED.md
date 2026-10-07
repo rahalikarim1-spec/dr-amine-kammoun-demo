@@ -25,3 +25,9 @@ Until provided, the site never displays invented values: blocks are hidden or us
 | 19 | **Contact-form destination** (email/webhook) | Form is in demo mode until set | `CONTACT_WEBHOOK_URL` |
 | 20 | **Production domain** + approval to go live | Canonicals, sitemap, indexing | `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_INDEXING=on` |
 | 21 | **Ethical check** with the relevant professional body of the wording used on the site | Tunisian medical communication rules | — |
+| 22 | **Academic career**: positions held (title, university/faculty, period) — wording/titles exactly as official | Publications page, E-E-A-T, schema `affiliation` | `academicProfile.positions` in `src/config/publications.ts` |
+| 23 | **Degrees / diplomas** with institution and year | Publications page, schema `alumniOf` | `academicProfile.credentials` |
+| 24 | **List of scientific publications**: title, authors (as printed), year, journal/university/congress, type, short abstract (FR/AR, optional), DOI or URL | Publications page + `ScholarlyArticle` schema; page goes indexable once filled | `PUBLICATIONS` in `src/config/publications.ts` (format documented in the file) |
+| 25 | **Confirm the geographic wording for L'Aouina** ("secteur voisin d'Ain Zaghouan Nord") and, if desired, real access tips (landmarks, parking, public transport) | Local SEO accuracy; richer Aouina page | `src/content/{fr,ar}/local.ts` |
+| 26 | **Google Business Profile search-query export** (queries/areas already showing) | Prioritise Aouina vs other neighbourhoods with real data | — |
+

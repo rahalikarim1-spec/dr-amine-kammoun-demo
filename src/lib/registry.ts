@@ -10,6 +10,7 @@
  *    cross-listed (not duplicated) in the "Pathologies gynécologiques" hub through `alsoInHubs`.
  */
 import type { PageDef } from "./types";
+import { hasPublications } from "@/config/publications";
 
 type Partial_ = Omit<PageDef, "slug" | "changeFrequency" | "priority" | "index"> & {
   fr: string;
@@ -35,11 +36,14 @@ export const PAGES: PageDef[] = [
   def({ id: "home", template: "home", type: "home", cluster: "core", fr: "", ar: "", topic: "Dr Amine Kammoun – gynécologue-obstétricien Tunis (brand + local)", intent: "navigational", priority: 1, changeFrequency: "weekly",
     related: ["hub-gyneco", "hub-pregnancy", "hub-echo", "hub-conditions", "doctor", "local-ain-zaghouan", "contact"] }),
   def({ id: "doctor", template: "doctor", type: "core", cluster: "core", fr: "le-docteur", ar: "al-tabib", parent: "home", topic: "Dr Amine Kammoun – profile / E-E-A-T", intent: "trust", priority: 0.8, inNav: true,
-    related: ["cabinet", "local-ain-zaghouan", "hub-gyneco", "hub-pregnancy", "editorial-policy"] }),
+    related: ["doctor-publications", "cabinet", "local-ain-zaghouan", "local-aouina", "hub-gyneco", "hub-pregnancy", "editorial-policy"] }),
+  def({ id: "doctor-publications", template: "publications", type: "child", cluster: "core", fr: "publications-scientifiques", ar: "al-manshurat-al-ilmiya", parent: "doctor", topic: "Parcours académique et publications scientifiques (E-E-A-T)", intent: "trust", priority: 0.6,
+    // Thin until real publications exist → noindex + not in sitemap automatically.
+    index: hasPublications, related: ["doctor", "editorial-policy", "info-hub", "cabinet"] }),
   def({ id: "cabinet", template: "cabinet", type: "core", cluster: "core", fr: "le-cabinet", ar: "al-iyada", parent: "home", topic: "Cabinet de gynécologie Ain Zaghouan Nord – access & preparing a visit", intent: "local", priority: 0.7,
-    related: ["local-ain-zaghouan", "areas", "contact", "appointment", "gyn-consultation"] }),
+    related: ["local-ain-zaghouan", "local-aouina", "areas", "contact", "appointment", "gyn-consultation"] }),
   def({ id: "contact", template: "contact", type: "core", cluster: "core", fr: "contact", ar: "ittisal", parent: "home", topic: "Contact & directions (NAP)", intent: "navigational", priority: 0.9, inNav: true,
-    related: ["appointment", "cabinet", "local-ain-zaghouan", "faq"] }),
+    related: ["appointment", "cabinet", "local-ain-zaghouan", "local-aouina", "faq"] }),
   def({ id: "appointment", template: "appointment", type: "core", cluster: "core", fr: "rendez-vous", ar: "hajz-mawid", parent: "home", topic: "Prendre rendez-vous gynécologue Tunis", intent: "transactional", priority: 0.9,
     related: ["contact", "cabinet", "gyn-consultation", "preg-consultation", "faq"] }),
   def({ id: "faq", template: "faq", type: "core", cluster: "core", fr: "faq", ar: "as-ila-shaiaa", parent: "home", topic: "General patient FAQ (practical questions)", intent: "informational", priority: 0.6,
@@ -49,13 +53,15 @@ export const PAGES: PageDef[] = [
 
   /* ============ LOCAL ============ */
   def({ id: "local-ain-zaghouan", template: "local", type: "local", cluster: "local", fr: "gynecologue-ain-zaghouan-nord", ar: "tabib-nisaa-ain-zaghouan-al-shamaliya", parent: "home", topic: "gynécologue Ain Zaghouan Nord (+ Aouina, Soukra, Lac 2, Cité El Wahat)", intent: "local", priority: 0.95, inNav: false,
-    related: ["areas", "cabinet", "hub-pregnancy", "hub-gyneco", "hub-echo", "contact"] }),
+    related: ["local-aouina", "areas", "cabinet", "hub-pregnancy", "hub-gyneco", "hub-echo", "contact"] }),
+  def({ id: "local-aouina", template: "local", type: "local", cluster: "local", fr: "gynecologue-pres-de-l-aouina", ar: "tabib-nisaa-qarib-al-aouina", parent: "home", topic: "gynécologue près de l'Aouina (cabinet à Ain Zaghouan Nord) — secondary local target", intent: "local", priority: 0.9,
+    related: ["local-ain-zaghouan", "doctor", "hub-gyneco", "hub-pregnancy", "hub-echo", "hub-fertility", "contact"] }),
   def({ id: "areas", template: "hub", type: "local", cluster: "local", fr: "zones-desservies", ar: "al-manatiq", parent: "local-ain-zaghouan", topic: "Zones desservies: Ain Zaghouan, Aouina, Soukra, Lac 2, Berges du Lac, Grand Tunis", intent: "local", priority: 0.7,
-    related: ["local-ain-zaghouan", "cabinet", "contact", "appointment"] }),
+    related: ["local-ain-zaghouan", "local-aouina", "cabinet", "contact", "appointment"] }),
 
   /* ============ GYNECOLOGY ============ */
   def({ id: "hub-gyneco", template: "hub", type: "hub", cluster: "gynecology", fr: "gynecologie", ar: "tibb-al-nisaa", parent: "home", topic: "Gynécologie – hub", intent: "informational", priority: 0.9, inNav: true,
-    related: ["hub-pregnancy", "hub-echo", "hub-conditions", "local-ain-zaghouan", "doctor"] }),
+    related: ["hub-pregnancy", "hub-echo", "hub-conditions", "local-ain-zaghouan", "local-aouina", "doctor"] }),
   def({ id: "gyn-consultation", template: "article", type: "child", cluster: "gynecology", fr: "consultation-gynecologique", ar: "istishara-nisaiya", parent: "hub-gyneco", topic: "consultation gynécologique – déroulement", intent: "informational", priority: 0.8,
     related: ["gyn-routine", "gyn-screening", "echo-gyn", "gyn-contraception", "local-ain-zaghouan"], sources: ["acog", "cngof", "who"] }),
   def({ id: "gyn-routine", template: "article", type: "child", cluster: "gynecology", fr: "consultation-de-routine", ar: "fahs-dawri", parent: "hub-gyneco", topic: "suivi gynécologique de routine – fréquence & prévention", intent: "informational", priority: 0.7,
@@ -81,7 +87,7 @@ export const PAGES: PageDef[] = [
 
   /* ============ PREGNANCY ============ */
   def({ id: "hub-pregnancy", template: "hub", type: "hub", cluster: "pregnancy", fr: "grossesse-obstetrique", ar: "al-haml-wal-wiyada", parent: "home", topic: "Grossesse & obstétrique – hub", intent: "informational", priority: 0.9, inNav: true,
-    related: ["hub-echo", "hub-gyneco", "local-ain-zaghouan", "doctor", "appointment"] }),
+    related: ["hub-echo", "hub-gyneco", "local-ain-zaghouan", "local-aouina", "doctor", "appointment"] }),
   def({ id: "preg-follow-up", template: "article", type: "child", cluster: "pregnancy", fr: "suivi-de-grossesse", ar: "mutabaat-al-haml", parent: "hub-pregnancy", topic: "suivi de grossesse – calendrier & examens", intent: "informational", priority: 0.9,
     related: ["preg-consultation", "echo-obstetric", "preg-t1", "preg-t2", "preg-t3", "preg-high-risk"], sources: ["who", "has", "cngof", "nhs"] }),
   def({ id: "preg-consultation", template: "article", type: "child", cluster: "pregnancy", fr: "consultation-grossesse", ar: "istishara-al-haml", parent: "hub-pregnancy", topic: "première consultation de grossesse – déroulement", intent: "informational", priority: 0.8,
@@ -101,7 +107,7 @@ export const PAGES: PageDef[] = [
 
   /* ============ ULTRASOUND ============ */
   def({ id: "hub-echo", template: "hub", type: "hub", cluster: "ultrasound", fr: "echographie", ar: "tasweer-fawq-sawti", parent: "home", topic: "Échographie gynécologique & obstétricale – hub", intent: "informational", priority: 0.85, inNav: true,
-    related: ["hub-pregnancy", "hub-gyneco", "hub-conditions", "local-ain-zaghouan", "contact"] }),
+    related: ["hub-pregnancy", "hub-gyneco", "hub-conditions", "local-ain-zaghouan", "local-aouina", "contact"] }),
   def({ id: "echo-gyn", template: "article", type: "child", cluster: "ultrasound", fr: "echographie-gynecologique", ar: "tasweer-nisaa", parent: "hub-echo", topic: "échographie gynécologique (pelvienne)", intent: "informational", priority: 0.8,
     related: ["gyn-pelvic-pain", "cond-ovarian-cyst", "cond-fibroid", "cond-endometriosis", "gyn-cycle", "fert-workup"], sources: ["acog", "nhs", "cngof"] }),
   def({ id: "echo-obstetric", template: "article", type: "child", cluster: "ultrasound", fr: "echographie-obstetricale", ar: "tasweer-al-haml", parent: "hub-echo", topic: "échographie de grossesse (obstétricale) – les 3 échographies", intent: "informational", priority: 0.85,

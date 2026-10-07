@@ -9,7 +9,7 @@ import { seoConfig } from "@/config/seo";
 import { FaqList, CardGrid } from "./ContentBlocks";
 import { LocalMap, NapCard } from "./ContactBlocks";
 import { Inline } from "@/lib/inline";
-import { ArcMotif, ArrowIcon, CalendarIcon, CheckIcon, PhoneIcon, PregnancyIcon, GynIcon, ConditionsIcon, PinIcon } from "./Icons";
+import { ArcMotif, ArrowIcon, CalendarIcon, CheckIcon, PhoneIcon, PinIcon } from "./Icons";
 
 export function HomeView({ lang }: { lang: Lang }) {
   const t = getDict(lang);
@@ -67,18 +67,15 @@ export function HomeView({ lang }: { lang: Lang }) {
             <p className="mt-4 max-w-xl text-lg text-ink-soft">{h.doctorText}</p>
             <Link href={pathOf("doctor", lang)} className="btn btn-secondary mt-6">{h.doctorLink}<ArrowIcon className="h-4 w-4" /></Link>
           </div>
-          <ul className="grid gap-4 sm:grid-cols-2">
-            {([["hub-gyneco", GynIcon, h.gynTitle, h.gynText], ["hub-pregnancy", PregnancyIcon, h.pregnancyTitle, h.pregnancyText]] as const).map(([id, Icon, title, text]) => (
-              <li key={id}>
-                <Link href={pathOf(id, lang)} className="card card-hover group flex h-full flex-col p-6">
-                  <span className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-teal-50 text-teal-700"><Icon className="h-6 w-6" /></span>
-                  <h3 className="!text-xl">{title}</h3>
-                  <p className="mt-2 flex-1 text-[0.95rem] text-ink-mute">{text}</p>
-                  <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-teal-700">{t.cta.learnMore}<ArrowIcon className="h-4 w-4" /></span>
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <div className="card p-7">
+            <p className="font-display text-xl font-semibold rtl:font-sans">{siteConfig.nameLocalized[lang]}</p>
+            <p className="text-ink-mute">{siteConfig.jobTitle[lang]}</p>
+            <ul className="mt-5 space-y-2 text-[0.97rem]">
+              <li><Link href={pathOf("doctor-publications", lang)} className="link-inline">{getContent(lang, "doctor-publications").label}</Link></li>
+              <li><Link href={pathOf("cabinet", lang)} className="link-inline">{getContent(lang, "cabinet").label}</Link></li>
+              <li><Link href={pathOf("local-aouina", lang)} className="link-inline">{getContent(lang, "local-aouina").label}</Link></li>
+            </ul>
+          </div>
         </div>
       </section>
 
@@ -89,28 +86,13 @@ export function HomeView({ lang }: { lang: Lang }) {
           <h2 className="mt-3 text-3xl sm:text-4xl">{h.topicsTitle}</h2>
           <p className="mt-3 mb-9 max-w-2xl text-lg text-ink-soft">{h.topicsIntro}</p>
           <CardGrid pages={["hub-gyneco", "hub-pregnancy", "hub-echo", "hub-fertility", "hub-conditions"].map(getPage)} lang={lang} />
-          <p className="mt-8"><Link href={pathOf("info-hub", lang)} className="link-inline">{t.cta.seeAll} →</Link></p>
-        </div>
-      </section>
-
-      {/* CONDITIONS */}
-      <section className="section">
-        <div className="container-x grid gap-10 lg:grid-cols-[1.2fr_1fr] lg:items-center">
-          <ul className="grid gap-3 sm:grid-cols-2 lg:order-1">
+          <div className="mt-8 flex flex-wrap items-center gap-2">
+            <span className="text-sm font-semibold text-ink-soft">{h.conditionsTitle} :</span>
             {["cond-endometriosis", "cond-pcos", "cond-ovarian-cyst", "cond-fibroid"].map((id) => (
-              <li key={id}>
-                <Link href={pathOf(id, lang)} className="card card-hover flex items-center justify-between gap-3 px-5 py-4 font-semibold">
-                  {getContent(lang, id).label}<ArrowIcon className="h-4 w-4 shrink-0 text-teal-600" />
-                </Link>
-              </li>
+              <Link key={id} href={pathOf(id, lang)} className="rounded-full border border-ink/10 bg-white px-4 py-2 text-sm font-medium hover:bg-teal-50">{getContent(lang, id).label}</Link>
             ))}
-          </ul>
-          <div className="lg:order-2">
-            <span className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-teal-50 text-teal-700"><ConditionsIcon className="h-6 w-6" /></span>
-            <h2 className="text-3xl sm:text-4xl">{h.conditionsTitle}</h2>
-            <p className="mt-4 max-w-xl text-lg text-ink-soft">{h.conditionsText}</p>
-            <Link href={pathOf("hub-conditions", lang)} className="btn btn-secondary mt-6">{t.cta.learnMore}<ArrowIcon className="h-4 w-4" /></Link>
           </div>
+          <p className="mt-6"><Link href={pathOf("info-hub", lang)} className="link-inline">{t.cta.seeAll} →</Link></p>
         </div>
       </section>
 
@@ -129,7 +111,15 @@ export function HomeView({ lang }: { lang: Lang }) {
             <h3 className="!text-2xl text-white">{h.areasTitle}</h3>
             <p className="mt-3 text-white/80">{h.areasText}</p>
             <ul className="mt-5 flex flex-wrap gap-2">
-              {seoConfig.areaServed.map((a) => <li key={a.fr} className="rounded-full border border-white/25 px-4 py-1.5 text-sm text-white/90">{a[lang]}</li>)}
+              {seoConfig.areaServed.map((a) => (
+                <li key={a.fr}>
+                  {a.page ? (
+                    <Link href={pathOf(a.page, lang)} className="inline-block rounded-full border border-white/60 bg-white/10 px-4 py-1.5 text-sm font-semibold text-white hover:bg-white/20">{a[lang]}</Link>
+                  ) : (
+                    <span className="inline-block rounded-full border border-white/25 px-4 py-1.5 text-sm text-white/90">{a[lang]}</span>
+                  )}
+                </li>
+              ))}
             </ul>
             <Link href={pathOf("areas", lang)} className="mt-6 inline-flex items-center gap-2 font-semibold text-white underline underline-offset-4">{h.areasLink}<ArrowIcon className="h-4 w-4" /></Link>
           </div>
