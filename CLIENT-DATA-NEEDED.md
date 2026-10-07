@@ -19,7 +19,7 @@ Until provided, the site never displays invented values: blocks are hidden or us
 | 13 | **Additional phone numbers / WhatsApp number** | Contact, `whatsapp_click` | `additionalPhones`, `NEXT_PUBLIC_WHATSAPP_NUMBER` |
 | 14 | **Social profiles** (if any) | schema `sameAs` | `siteConfig.social` |
 | 15 | **Medical registration / ordinal information** (where appropriate) | Legal notice, trust | `professional.registrationNumber` + `legal-notice` content |
-| 16 | **Arabic spelling of the name** ("د. أمين قمون" is a transliteration) | Arabic brand consistency | `siteConfig.nameLocalized.ar` |
+| 16 | ~~Arabic spelling of the name~~ — **confirmed: د. أمين كمون** (applied everywhere) | Arabic brand consistency | `siteConfig.nameLocalized.ar` |
 | 17 | **Medical validation of all content** | YMYL. Pages say "validation médicale à venir" until validated | `src/config/editorial.ts` → `reviewed: true`, `reviewedOn` |
 | 18 | **Legal texts review** (legal notice, privacy, cookies) incl. hosting provider, data retention | Compliance; current texts are generic drafts | `src/content/{fr,ar}/legal.ts` |
 | 19 | **Contact-form destination** (email/webhook) | Form is in demo mode until set | `CONTACT_WEBHOOK_URL` |

@@ -114,7 +114,7 @@ export function clinicNode(lang: Lang) {
   return {
     "@type": "MedicalClinic",
     "@id": IDS.clinic,
-    name: lang === "fr" ? "Cabinet du Dr Amine Kammoun" : "عيادة د. أمين قمون",
+    name: lang === "fr" ? "Cabinet du Dr Amine Kammoun" : "عيادة د. أمين كمون",
     url: urlOf("cabinet", lang),
     telephone: siteConfig.phone.e164,
     medicalSpecialty: ["https://schema.org/Gynecologic", "https://schema.org/Obstetric"],

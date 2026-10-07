@@ -25,9 +25,9 @@ export const siteConfig = {
   indexing: process.env.NEXT_PUBLIC_INDEXING === "on",
 
   name: "Dr Amine Kammoun",
-  siteName: { fr: "Dr Amine Kammoun – Gynécologue-Obstétricien", ar: "د. أمين قمون – طبيب أمراض النساء والتوليد" } as Localized,
-  /** ⚠ Arabic spelling of the surname to be confirmed with the doctor. */
-  nameLocalized: { fr: "Dr Amine Kammoun", ar: "د. أمين قمون" } as Localized,
+  siteName: { fr: "Dr Amine Kammoun – Gynécologue-Obstétricien", ar: "د. أمين كمون – طبيب أمراض النساء والتوليد" } as Localized,
+  /** Arabic spelling confirmed by the client: د. أمين كمون. */
+  nameLocalized: { fr: "Dr Amine Kammoun", ar: "د. أمين كمون" } as Localized,
   jobTitle: { fr: "Gynécologue-Obstétricien", ar: "طبيب أمراض النساء والتوليد" } as Localized,
 
   phone: {

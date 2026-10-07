@@ -4,7 +4,7 @@ import type { Lang, Localized } from "@/lib/types";
 export const seoConfig = {
   titleSuffix: {
     fr: " | Dr Amine Kammoun",
-    ar: " | د. أمين قمون",
+    ar: " | د. أمين كمون",
   } as Localized,
   /** Home / pages that already carry the brand in their own title. */
   titleMaxLength: 70,
